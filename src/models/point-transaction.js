@@ -12,5 +12,23 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, { underscored: true });
 
+    PointTransaction.associate = db => {
+        PointTransaction.belongsTo(db.User, {
+            foreignKey: {
+                name: 'userId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        PointTransaction.belongsTo(db.Order, {
+            foreignKey: {
+                name: 'orderId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+    }
+
     return PointTransaction;
 }

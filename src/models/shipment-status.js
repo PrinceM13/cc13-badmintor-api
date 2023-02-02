@@ -31,5 +31,23 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, { underscored: true });
 
+    ShipmentStatus.associate = db => {
+        ShipmentStatus.belongsTo(db.Employee, {
+            foreignKey: {
+                name: 'employeeId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        ShipmentStatus.belongsTo(db.Order, {
+            foreignKey: {
+                name: 'orderId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+    }
+
     return ShipmentStatus;
 }

@@ -9,5 +9,23 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, { underscored: true });
 
+    UserReward.associate = db => {
+        UserReward.belongsTo(db.User, {
+            foreignKey: {
+                name: 'userId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        UserReward.belongsTo(db.Reward, {
+            foreignKey: {
+                name: 'rewardId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+    }
+
     return UserReward;
 }

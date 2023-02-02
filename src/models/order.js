@@ -31,5 +31,56 @@ module.exports = (sequelize, DataTypes) => {
             validate: { notEmpty: true }
         }
     }, { underscored: true });
+
+    Order.associate = db => {
+        Order.hasMany(db.OrderItem, {
+            foreignKey: {
+                name: 'orderId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        Order.belongsTo(db.Reward, {
+            foreignKey: {
+                name: 'rewardId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        Order.hasOne(db.RewardTransaction, {
+            foreignKey: {
+                name: 'orderId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        Order.hasOne(db.PointTransaction, {
+            foreignKey: {
+                name: 'orderId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        Order.hasOne(db.ShipmentStatus, {
+            foreignKey: {
+                name: 'orderId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        Order.belongsTo(db.User, {
+            foreignKey: {
+                name: 'userId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+    }
+
     return Order;
 }

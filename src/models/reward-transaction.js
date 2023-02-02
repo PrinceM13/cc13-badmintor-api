@@ -12,5 +12,38 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, { underscored: true });
 
+    RewardTransaction.associate = db => {
+        RewardTransaction.belongsTo(db.Employee, {
+            foreignKey: {
+                name: 'employeeId'
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        RewardTransaction.belongsTo(db.Reward, {
+            foreignKey: {
+                name: 'rewardId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        RewardTransaction.belongsTo(db.Order, {
+            foreignKey: {
+                name: 'orderId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        RewardTransaction.belongsTo(db.User, {
+            foreignKey: {
+                name: 'userId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+    }
+
     return RewardTransaction;
 }

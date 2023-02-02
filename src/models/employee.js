@@ -9,5 +9,30 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, { underscored: true });
 
+    Employee.associate = db => {
+        Employee.belongsTo(db.User, {
+            foreignKey: {
+                name: 'userId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        Employee.hasMany(db.ShipmentStatus, {
+            foreignKey: {
+                name: 'employeeId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        Employee.hasMany(db.RewardTransaction, {    // optional
+            foreignKey: {
+                name: 'employeeId'
+            },
+            onDelete: 'RESTRICT'
+        });
+    }
+
     return Employee;
 }

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Supllier = sequelize.define('Supllier', {
+    const Supplier = sequelize.define('Supplier', {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -37,5 +37,15 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, { underscored: true });
 
-    return Supllier;
+    Supplier.associate = db => {
+        Supplier.hasMany(db.Product, {
+            foreignKey: {
+                name: 'supplierId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+    }
+
+    return Supplier;
 }

@@ -48,5 +48,31 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, { underscored: true });
 
+    Reward.associate = db => {
+        Reward.hasMany(db.UserReward, {
+            foreignKey: {
+                name: 'rewardId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        Reward.hasMany(db.RewardTransaction, {
+            foreignKey: {
+                name: 'rewardId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+
+        Reward.hasMany(db.Order, {
+            foreignKey: {
+                name: 'rewardId',
+                allowNull: false
+            },
+            onDelete: 'RESTRICT'
+        });
+    }
+
     return Reward;
 }
