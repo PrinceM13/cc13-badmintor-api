@@ -8,6 +8,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+const authRoute = require('./routes/auth-route');
+
 const notFoundMiddleWare = require('./middlewares/not-found');
 const errorMiddleWare = require('./middlewares/error');
 
@@ -20,6 +22,7 @@ app.use(cors());            // to connect with front
 app.use(express.json());    // to get BODY data
 
 // router
+app.use('/auth', authRoute);
 
 // middleware error
 app.use(notFoundMiddleWare);
