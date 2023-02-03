@@ -10,8 +10,10 @@ const morgan = require('morgan');
 
 const authRoute = require('./routes/auth-route');
 const userRoute = require('./routes/user-route');
+const superUserRoute = require('./routes/super-user-route');
 
 const authenticateMiddleware = require('./middlewares/authenticate');
+const superUserMiddleware = require('./middlewares/super-user');
 const notFoundMiddleWare = require('./middlewares/not-found');
 const errorMiddleWare = require('./middlewares/error');
 
@@ -27,6 +29,10 @@ app.use(express.json());    // to get BODY data
 app.use('/auth', authRoute);
 // authentication's level = user
 app.use('/user', authenticateMiddleware, userRoute);
+// authentication's level = admin
+// app.use('/admin');
+// authentication's level = super user
+app.use('/super-user', authenticateMiddleware, superUserMiddleware, superUserRoute);
 
 // middleware error
 app.use(notFoundMiddleWare);
