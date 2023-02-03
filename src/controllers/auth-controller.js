@@ -34,7 +34,7 @@ exports.login = async (req, res, next) => {
 
         // check if user exist in db
         const user = await User.findOne({ where: { email: data.email } });
-        // throw error
+        // throw error (invalid user)
         if (!user) { createError('invalid email or password', 400) }
 
         // compare password
