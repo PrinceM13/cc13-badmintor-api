@@ -4,6 +4,9 @@
 require('dotenv').config();
 const express = require('express');
 const chalk = require('chalk');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
 
 const notFoundMiddleWare = require('./middlewares/not-found');
 const errorMiddleWare = require('./middlewares/error');
@@ -11,7 +14,10 @@ const errorMiddleWare = require('./middlewares/error');
 const app = express();
 
 // middleware
-app.use(express.json());
+app.use(morgan('dev'));     // to log request
+app.use(helmet());          // to protect http
+app.use(cors());            // to connect with front
+app.use(express.json());    // to get BODY data
 
 // router
 
