@@ -9,8 +9,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 
 const authRoute = require('./routes/auth-route');
-const profileRoute = require('./routes/profile-route');
-const cartRoute = require('./routes/cart-route');
+const userRoute = require('./routes/user-route');
 
 const authenticateMiddleware = require('./middlewares/authenticate');
 const notFoundMiddleWare = require('./middlewares/not-found');
@@ -27,8 +26,7 @@ app.use(express.json());    // to get BODY data
 // router
 app.use('/auth', authRoute);
 // authentication's level = user
-app.use('/profile', authenticateMiddleware, profileRoute);
-app.use('/cart', authenticateMiddleware, cartRoute);
+app.use('/user', authenticateMiddleware, userRoute);
 
 // middleware error
 app.use(notFoundMiddleWare);
