@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         Promotion.belongsTo(db.Product, {
             foreignKey: {
                 name: 'productId',
+                unique: true,
                 allowNull: false
             },
             onDelete: 'RESTRICT'

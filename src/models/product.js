@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         Product.hasOne(db.Promotion, {
             foreignKey: {
                 name: 'productId',
+                unique: true,
                 allowNull: false
             },
             onDelete: 'RESTRICT'

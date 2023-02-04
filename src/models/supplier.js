@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         brand: {
             type: DataTypes.STRING,
+            unique: true,
             allowNull: false,
             validate: { notEmpty: true }
         },

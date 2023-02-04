@@ -64,6 +64,7 @@ module.exports = (sequelize, DataTypes) => {
         User.hasOne(db.Employee, {
             foreignKey: {
                 name: 'userId',
+                unique: true,
                 allowNull: false
             },
             onDelete: 'RESTRICT'

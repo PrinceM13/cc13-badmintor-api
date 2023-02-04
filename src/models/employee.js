@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         Employee.belongsTo(db.User, {
             foreignKey: {
                 name: 'userId',
+                unique: true,
                 allowNull: false
             },
             onDelete: 'RESTRICT'
