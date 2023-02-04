@@ -7,5 +7,6 @@ const router = express.Router();
 router.post('/employees/:userId', employeeController.createEmployee);   // role = ADMIN by default
 router.patch('/employees/:employeeId', employeeController.updateEmployeeRole);
 router.delete('/employees/:employeeId', employeeController.deleteEmployee);
+router.get('/employees', employeeController.getAllEmployee);
 
 module.exports = router;

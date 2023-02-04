@@ -41,7 +41,7 @@ exports.updateEmployeeRole = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-}
+};
 
 exports.deleteEmployee = async (req, res, next) => {
     try {
@@ -56,4 +56,16 @@ exports.deleteEmployee = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
-};  
+};
+
+exports.getAllEmployee = async (req, res, next) => {
+    try {
+        // get all employee from Employee table
+        const employees = await Employee.findAll();
+
+        // response with all employee data
+        res.status(200).json({ employees });
+    } catch (err) {
+        next(err);
+    }
+};
