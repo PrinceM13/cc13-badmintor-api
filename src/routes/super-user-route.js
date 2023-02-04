@@ -4,8 +4,8 @@ const employeeController = require('../controllers/employee-controller');
 
 const router = express.Router();
 
-router.post('/employees/:userId', employeeController.createEmployee);
-// router.patch('/employees/:employeeId');
-// router.delete('/employees/:employeeId');
+router.post('/employees/:userId', employeeController.createEmployee);   // role = ADMIN by default
+router.patch('/employees/:employeeId', employeeController.updateEmployeeRole);
+router.delete('/employees/:employeeId', employeeController.deleteEmployee);
 
 module.exports = router;

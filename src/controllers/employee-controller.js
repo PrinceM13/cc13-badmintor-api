@@ -8,6 +8,7 @@ exports.createEmployee = async (req, res, next) => {
 
         // check if user exist in Employee table
         const isExist = await Employee.findOne({ where: { userId: +req.params.userId } });
+        // throw error (already exist)
         if (isExist) { createError('this user is already exist in employees table', 400) }
 
         // create employee in Employee table
@@ -23,3 +24,36 @@ exports.createEmployee = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.updateEmployeeRole = async (req, res, next) => {
+    try {
+        // update employee role in Employee table
+        const [totalUpdate] = await Employee.update(
+            { role: req.body.role },
+            { where: { id: +req.params.employeeId } }
+        );
+
+        // throw error (invalid employee id)
+        if (totalUpdate === 0) { createError('invalid employee id', 400) }
+
+        // response with success message
+        res.status(200).json({ message: `employee's role was successfully updated to ${req.body.role}` });
+    } catch (err) {
+        next(err);
+    }
+}
+
+exports.deleteEmployee = async (req, res, next) => {
+    try {
+        // delete employee from Employee table
+        const totalDelete = await Employee.destroy({ where: { id: +req.params.employeeId } });
+
+        // throw error (invalid employee id)
+        if (totalDelete === 0) { createError('invalid employee id', 400) }
+
+        // response just success status 204
+        res.status(204).json();
+    } catch (err) {
+        next(err);
+    }
+};  
