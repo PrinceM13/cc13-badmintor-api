@@ -38,3 +38,5 @@ exports.SUPPLIER = 'supplier';
 exports.SUPPLIER_ID = 'supplierId';
 exports.PRODUCT = 'product';
 exports.PRODUCT_ID = 'productId';
+exports.PROMOTION = 'promotion';
+exports.PROMOTION_ID = 'promotionId';
