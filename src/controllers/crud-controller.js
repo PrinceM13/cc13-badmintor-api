@@ -1,10 +1,11 @@
+const { EMPLOYEE } = require("../config/constant");
 const createError = require("../utils/create-error");
 
 exports.createRecord = (Model, recordName) => {
     return async (req, res, next) => {
         try {
             // for Employee: check if authenticated user try to create his/her self
-            if (recordName === 'employee' && req.user.id === req.body.userId) { createError("can't create yourself, you are employee", 400) }
+            if (recordName === EMPLOYEE && req.user.id === req.body.userId) { createError("can't create yourself, you are employee", 400) }
 
             // insert record into table
             await Model.create(req.body);

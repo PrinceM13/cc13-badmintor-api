@@ -28,3 +28,6 @@ exports.PENDING = 'PENDING';
 exports.PACKING = 'PACKING';
 exports.SENT_OUT = 'SENT_OUT';
 exports.SHIPMENT_COMPLETED = 'SHIPMENT_COMPLETED';
+
+// constants
+exports.EMPLOYEE = 'employee';
