@@ -13,9 +13,11 @@ const userRoute = require('./routes/user-route');
 const superUserRoute = require('./routes/super-user-route');
 
 const authenticateMiddleware = require('./middlewares/authenticate');
-const superUserMiddleware = require('./middlewares/super-user');
+const authLevelMiddleware = require('./middlewares/auth-level')
 const notFoundMiddleWare = require('./middlewares/not-found');
 const errorMiddleWare = require('./middlewares/error');
+
+const { SUPER_USER, ADMIN } = require('./config/constant');
 
 const app = express();
 
@@ -32,7 +34,7 @@ app.use('/user', authenticateMiddleware, userRoute);
 // authentication's level = admin
 // app.use('/admin');
 // authentication's level = super user
-app.use('/super-user', authenticateMiddleware, superUserMiddleware, superUserRoute);
+app.use('/super-user', authenticateMiddleware, authLevelMiddleware(SUPER_USER), superUserRoute);
 
 // middleware error
 app.use(notFoundMiddleWare);
