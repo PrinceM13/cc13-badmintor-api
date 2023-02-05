@@ -31,3 +31,10 @@ exports.SHIPMENT_COMPLETED = 'SHIPMENT_COMPLETED';
 
 // constants
 exports.EMPLOYEE = 'employee';
+exports.EMPLOYEE_ID = 'employeeId';
+exports.CATEGORY = 'category';
+exports.CATEGORY_ID = 'categoryId';
+exports.SUPPLIER = 'supplier';
+exports.SUPPLIER_ID = 'supplierId';
+exports.PRODUCT = 'product';
+exports.PRODUCT_ID = 'productId';
