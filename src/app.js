@@ -8,6 +8,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+const visitorRoute = require('./routes/visitor-route');
 const authRoute = require('./routes/auth-route');
 const userRoute = require('./routes/user-route');
 const adminRoute = require('./routes/admin-route');
@@ -29,7 +30,8 @@ app.use(cors());            // to connect with front
 app.use(express.json());    // to get BODY data
 
 // router
-app.use('/auth', authRoute);
+app.use('/visitor', visitorRoute);
+app.use('/auth', authRoute);                                                                        // login & register
 app.use('/user', authenticateMiddleware, userRoute);                                                // authentication's level = user
 app.use('/admin', authenticateMiddleware, authLevelMiddleware([ADMIN, SUPER_USER]), adminRoute);    // authentication's level = admin (or above)
 app.use('/super-user', authenticateMiddleware, authLevelMiddleware(SUPER_USER), superUserRoute);    // authentication's level = super user

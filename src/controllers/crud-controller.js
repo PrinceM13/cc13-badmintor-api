@@ -65,3 +65,20 @@ exports.getAllRecords = (Model) => {
         }
     };
 };
+
+exports.getRecordById = (Model, recordId, recordName) => {
+    return async (req, res, next) => {
+        try {
+            // get record by id
+            const record = await Model.findOne({ where: { id: req.params[recordId] } });
+
+            // throw error (invalid record id)
+            if (!record) { createError(`invalid ${recordName} id`, 400) }
+
+            // response with 1 record
+            res.status(200).json({ record })
+        } catch (err) {
+            next(err);
+        }
+    };
+};
