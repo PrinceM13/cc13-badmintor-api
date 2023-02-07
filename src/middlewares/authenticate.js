@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const { User } = require('../models');
+const { User, Employee } = require('../models');
 const createError = require("../utils/create-error");
 
 module.exports = async (req, res, next) => {
@@ -17,7 +17,11 @@ module.exports = async (req, res, next) => {
         // get user data (id from payload)
         const user = await User.findOne({
             where: { id: payload.id },
-            attributes: { exclude: ['password'] }
+            attributes: { exclude: ['password'] },
+            include: {
+                model: Employee,
+                attributes: ['role']
+            }
         });
         // throw error (invalid id)
         if (!user) { createError('you are unauthorized', 401) }

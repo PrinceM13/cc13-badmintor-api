@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const { User } = require('../models');
+const { User, Employee } = require('../models');
 const createError = require('../utils/create-error');
 
 exports.register = async (req, res, next) => {
@@ -33,7 +33,13 @@ exports.login = async (req, res, next) => {
         const data = req.body
 
         // check if user exist in db
-        const user = await User.findOne({ where: { email: data.email } });
+        const user = await User.findOne({
+            where: { email: data.email },
+            include: {
+                model: Employee,
+                attributes: ['role']
+            }
+        });
         // throw error (invalid user)
         if (!user) { createError('invalid email or password', 400) }
 
@@ -55,7 +61,8 @@ exports.login = async (req, res, next) => {
                 birthdate: user.birthdate,
                 point: user.point,
                 totalSpend: user.totalSpend,
-                level: user.level
+                level: user.level,
+                Employee: user.Employee
             },
             process.env.JWT_SECRET_KEY,
             { expiresIn: process.env.JWT_EXPIRES_IN }
