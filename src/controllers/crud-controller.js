@@ -1,5 +1,6 @@
 const { EMPLOYEE } = require("../config/constant");
 const createError = require("../utils/create-error");
+const { User } = require('../models');
 
 exports.createRecord = (Model, recordName) => {
     return async (req, res, next) => {
@@ -52,11 +53,17 @@ exports.deleteRecord = (Model, recordId, recordName) => {
     };
 };
 
-exports.getAllRecords = (Model) => {
+exports.getAllRecords = (Model, recordName = '') => {
     return async (req, res, next) => {
         try {
-            // get all records from table
-            const records = await Model.findAll();
+            let records;
+            // for Employee: check if authenticated user try to create his/her self
+            if (recordName === EMPLOYEE) {
+                records = await Model.findAll({ include: { model: User } });
+            } else {
+                // get all records from table
+                records = await Model.findAll();
+            }
 
             // response with all records data
             res.status(200).json({ records });
