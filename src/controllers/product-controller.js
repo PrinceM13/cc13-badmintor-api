@@ -1,3 +1,5 @@
+const { Op } = require('sequelize');
+
 const { Product, Promotion } = require('../models');
 
 exports.getAllProductsByForeignKeyId = (foreignKeyId) => {
@@ -15,4 +17,21 @@ exports.getAllProductsByForeignKeyId = (foreignKeyId) => {
             next(err);
         }
     };
+};
+
+exports.getAllProductsWithPromotion = async (req, res, next) => {
+    try {
+        // get all products with promotion
+        const products = await Product.findAll({
+            include: {
+                model: Promotion,
+                where: { id: { [Op.ne]: null } }
+            }
+        });
+
+        // response with all products data
+        res.status(200).json({ products });
+    } catch (err) {
+        next(err);
+    }
 };
