@@ -1,5 +1,5 @@
 // authenticated only !!!
-const { Cart } = require('../models');
+const { Cart, Product, Promotion } = require('../models');
 const createError = require('../utils/create-error');
 
 exports.getMyInfo = async (req, res, next) => {
@@ -11,7 +11,11 @@ exports.getMyCart = async (req, res, next) => {
         // get all products in Cart table
         const carts = await Cart.findAll({
             where: { userId: req.user.id },
-            order: [['updatedAt', 'DESC']]
+            order: [['updatedAt', 'DESC']],
+            include: {
+                model: Product,
+                include: Promotion
+            },
         });
 
         // response with all items in cart of authenticated user
