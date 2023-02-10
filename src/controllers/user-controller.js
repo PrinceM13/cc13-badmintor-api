@@ -25,35 +25,40 @@ exports.getMyCart = async (req, res, next) => {
     }
 };
 
-exports.addMyCart = async (req, res, next) => {
+// -----------------------------------------------------------------------------------
+const manageAddToCart = async (item, id) => {
     try {
         // check if userId x productId is already exist (updating instead of creating)
         const isExist = await Cart.findOne({
             where: {
-                userId: req.user.id,
-                productId: req.body.productId
+                userId: id,
+                productId: item.productId
             }
         });
 
         // is exist ---> update || is not exist ---> create
         if (isExist) {
-            const newCart = { ...req.body, amount: req.body.amount + isExist.amount };
+            // const newCart = { ...item, amount: item.amount + isExist.amount };
+            const newCart = item;
             // update product (amount, note) in Cart table
             const [totalUpdate] = await Cart.update(newCart, { where: { id: isExist.id } });
 
             // throw error (invalid cart id)
             if (totalUpdate === 0) { createError(`invalid cart id`, 400) }
-
-            // response with success message
-            res.status(200).json({ message: `cart was successfully updated (try to add existing product)` });
         } else {
             // insert product into Cart table
-            await Cart.create({ ...req.body, userId: req.user.id });
-
-            // response with success message
-            res.status(200).json({ message: `product was successfully added to cart` });
+            await Cart.create({ ...item, userId: id });
         }
-
+    } catch (err) {
+        console.error(err)
+    }
+}
+// -----------------------------------------------------------------------------------
+exports.addMyCart = async (req, res, next) => {
+    console.log(req.body)
+    try {
+        await req.body.map(item => { manageAddToCart(item, req.user.id) });
+        res.status(200).json({ message: `product was successfully added to cart` });
     } catch (err) {
         next(err);
     }
