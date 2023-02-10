@@ -35,3 +35,15 @@ exports.getAllProductsWithPromotion = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.getAllProducts = async (req, res, next) => {
+    try {
+        // get all products with promotion
+        const products = await Product.findAll({ include: { model: Promotion } });
+
+        // response with all products data
+        res.status(200).json({ products });
+    } catch (err) {
+        next(err);
+    }
+};
