@@ -13,7 +13,7 @@ router.patch('/cart/:cartId', userController.updateMyCart);
 router.delete('/cart/:productId', userController.deleteMyCart);
 // order
 router.post('/orders', userController.createOrder);
-// router.delete('/orders',);
+router.get('/orders', userController.getOrderdByUserId);
 // order item
 router.post('/order-items', userController.createOrderItems);
 // router.delete('/order-items',);

@@ -125,3 +125,13 @@ exports.createOrderItems = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.getOrderdByUserId = async (req, res, next) => {
+    try {
+        const orders = await Order.findAll({ where: { userId: req.user.id }, include: { model: OrderItem } });
+        if (!orders) { createError(`invalid user id`, 400) }
+        res.status(200).json({ orders })
+    } catch (err) {
+        next(err);
+    }
+};
