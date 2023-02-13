@@ -1,5 +1,5 @@
 // authenticated only !!!
-const { Cart, Product, Promotion } = require('../models');
+const { Cart, Product, Promotion, Order, OrderItem } = require('../models');
 const createError = require('../utils/create-error');
 
 exports.getMyInfo = async (req, res, next) => {
@@ -55,7 +55,6 @@ const manageAddToCart = async (item, id) => {
 }
 // -----------------------------------------------------------------------------------
 exports.addMyCart = async (req, res, next) => {
-    console.log(req.body)
     try {
         await req.body.map(item => { manageAddToCart(item, req.user.id) });
         res.status(200).json({ message: `product was successfully added to cart` });
@@ -82,13 +81,46 @@ exports.updateMyCart = async (req, res, next) => {
 exports.deleteMyCart = async (req, res, next) => {
     try {
         // delete product from Cart table
-        const totalDelete = await Cart.destroy({ where: { id: +req.params.cartId } });
+        const totalDelete = await Cart.destroy({ where: { userId: req.user.id, productId: +req.params.productId } });
 
         // throw error (invalid cart id)
-        if (totalDelete === 0) { createError(`invalid cart id`, 400) }
+        if (totalDelete === 0) { createError(`invalid product id in your cart`, 400) }
 
         // response just success status 204
         res.status(204).json();
+    } catch (err) {
+        next(err);
+    }
+};
+
+// order
+// -----------------------------------------------------------------------------------
+exports.createOrder = async (req, res, next) => {
+    try {
+        console.log('---------->', { ...req.body, userId: req.user.id })
+        const order = await Order.create({ ...req.body, userId: req.user.id });
+
+        // response with success order
+        res.status(200).json({ order });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// order item
+// -----------------------------------------------------------------------------------
+const manageCreateOrderItem = async (item) => {
+    try {
+        await OrderItem.create(item);
+    } catch (err) {
+        console.error(err)
+    }
+}
+exports.createOrderItems = async (req, res, next) => {
+    try {
+        console.log('10101010101010101001---------', req.body)
+        req.body.map(item => { manageCreateOrderItem(item) });
+        res.status(200).json({ message: `successfully add items to order-items` });
     } catch (err) {
         next(err);
     }

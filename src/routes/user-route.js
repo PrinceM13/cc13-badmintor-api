@@ -10,6 +10,12 @@ router.get('/profile', userController.getMyInfo);
 router.post('/cart', userController.addMyCart);
 router.get('/cart', userController.getMyCart);
 router.patch('/cart/:cartId', userController.updateMyCart);
-router.delete('/cart/:cartId', userController.deleteMyCart);
+router.delete('/cart/:productId', userController.deleteMyCart);
+// order
+router.post('/orders', userController.createOrder);
+// router.delete('/orders',);
+// order item
+router.post('/order-items', userController.createOrderItems);
+// router.delete('/order-items',);
 
 module.exports = router;
