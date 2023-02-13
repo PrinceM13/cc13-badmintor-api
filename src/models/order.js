@@ -35,12 +35,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             validate: { notEmpty: true }
         },
-        expectedDate: {     // optional for pick up
-            type: DataTypes.DATEONLY,
+        expectedDateTime: {     // optional for pick up
+            type: DataTypes.DATE,
             validate: { notEmpty: true }
         },
-        expectedTime: {     // optional for pick up
-            type: DataTypes.TIME,
+        spare: {     // for spare
+            type: DataTypes.STRING,
             validate: { notEmpty: true }
         },
         userNote: {     // optional
