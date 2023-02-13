@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Promotion = sequelize.define('Promotion', {
         discount: {
-            type: DataTypes.DECIMAL,
+            type: DataTypes.DECIMAL(10,2),
             allowNull: false,
             validate: { notEmpty: true }
         },

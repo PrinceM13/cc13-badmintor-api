@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 0
         },
         totalSpend: {   // add by system
-            type: DataTypes.DECIMAL,
+            type: DataTypes.DECIMAL(10,2),
             defaultValue: 0.00
         },
         level: {    // add by system

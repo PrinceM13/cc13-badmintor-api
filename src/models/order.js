@@ -3,7 +3,7 @@ const { WAITING_FOR_PAYMENT, WAITING_FOR_SHIPPING, ORDER_COMPLETED } = require('
 module.exports = (sequelize, DataTypes) => {
     const Order = sequelize.define('Order', {
         discount: {     // optional
-            type: DataTypes.DECIMAL,
+            type: DataTypes.DECIMAL(10, 2),
             validate: { notEmpty: true }
         },
         includedRewardItem: {   // optional
@@ -18,13 +18,30 @@ module.exports = (sequelize, DataTypes) => {
         },
         paymentReceipt: {
             type: DataTypes.STRING,
-            allowNull: false,
+            // allowNull: false,
             validate: { notEmpty: true }
         },
         paymentDateTime: {
             type: DataTypes.DATE,
-            allowNull: false,
+            // allowNull: false,
             validate: { isDate: true }
+        },
+        isPickup: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            validate: { notEmpty: true }
+        },
+        address: {     // optional for shipping
+            type: DataTypes.STRING,
+            validate: { notEmpty: true }
+        },
+        expectedDate: {     // optional for pick up
+            type: DataTypes.DATEONLY,
+            validate: { notEmpty: true }
+        },
+        expectedTime: {     // optional for pick up
+            type: DataTypes.TIME,
+            validate: { notEmpty: true }
         },
         userNote: {     // optional
             type: DataTypes.STRING,
@@ -44,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
         Order.belongsTo(db.Reward, {
             foreignKey: {
                 name: 'rewardId',
-                allowNull: false
+                validate: { notEmpty: true }
             },
             onDelete: 'RESTRICT'
         });

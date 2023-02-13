@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
             validate: { notEmpty: true }
         },
         value: {    // optional for type = discount
-            type: DataTypes.DECIMAL,
+            type: DataTypes.DECIMAL(10,2),
             validate: { notEmpty: true }
         },
         limit: {
@@ -68,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
         Reward.hasMany(db.Order, {
             foreignKey: {
                 name: 'rewardId',
-                allowNull: false
+                validate: { notEmpty: true }
             },
             onDelete: 'RESTRICT'
         });
