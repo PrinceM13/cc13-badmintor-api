@@ -1,9 +1,9 @@
 const express = require('express');
 
-const { Category, Supplier, Product, Promotion } = require('../models');
+const { Category, Supplier, Product, Promotion, User } = require('../models');
 
 const crudController = require('../controllers/crud-controller');
-const { CATEGORY, CATEGORY_ID, SUPPLIER, SUPPLIER_ID, PRODUCT, PRODUCT_ID, PROMOTION, PROMOTION_ID } = require('../config/constant');
+const { CATEGORY, CATEGORY_ID, SUPPLIER, SUPPLIER_ID, PRODUCT, PRODUCT_ID, PROMOTION, PROMOTION_ID, USER } = require('../config/constant');
 
 const router = express.Router();
 
@@ -27,5 +27,7 @@ router.post('/promotions', crudController.createRecord(Promotion, PROMOTION));
 router.get('/promotions', crudController.getAllRecords(Promotion));
 router.patch('/promotions/:promotionId', crudController.updateRecord(Promotion, PROMOTION_ID, PROMOTION));
 router.delete('/promotions/:promotionId', crudController.deleteRecord(Promotion, PROMOTION_ID, PROMOTION));
+// user
+router.get('/users', crudController.getAllRecords(User, USER));
 
 module.exports = router;

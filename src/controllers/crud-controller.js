@@ -1,6 +1,6 @@
-const { EMPLOYEE } = require("../config/constant");
+const { EMPLOYEE, USER } = require("../config/constant");
 const createError = require("../utils/create-error");
-const { User } = require('../models');
+const { User, Employee } = require('../models');
 
 exports.createRecord = (Model, recordName) => {
     return async (req, res, next) => {
@@ -9,10 +9,16 @@ exports.createRecord = (Model, recordName) => {
             if (recordName === EMPLOYEE && req.user.id === req.body.userId) { createError("can't create yourself, you are employee", 400) }
 
             // insert record into table
-            await Model.create(req.body);
+            let addedRecord = await Model.create(req.body);
+
+            // Employee
+            if (recordName === EMPLOYEE) {
+                addedRecord = await Model.findOne({ where: { userId: addedRecord.userId }, include: { model: User } })
+            }
 
             // response with success message
-            res.status(200).json({ message: `${recordName} was successfully created` });
+            // res.status(200).json({ message: `${recordName} was successfully created` });
+            res.status(200).json({ addedRecord });
         } catch (err) {
             next(err);
         }
@@ -60,6 +66,14 @@ exports.getAllRecords = (Model, recordName = '') => {
             // for Employee: check if authenticated user try to create his/her self
             if (recordName === EMPLOYEE) {
                 records = await Model.findAll({ include: { model: User } });
+            } else if (recordName === USER) {
+                records = await Model.findAll({
+                    include: {
+                        model: Employee,
+                        attributes: ['role']
+                    },
+                    order: [['firstName', 'ASC']]
+                });
             } else {
                 // get all records from table
                 records = await Model.findAll();

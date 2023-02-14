@@ -30,6 +30,7 @@ exports.SENT_OUT = 'SENT_OUT';
 exports.SHIPMENT_COMPLETED = 'SHIPMENT_COMPLETED';
 
 // constants
+exports.USER = 'user';
 exports.EMPLOYEE = 'employee';
 exports.EMPLOYEE_ID = 'employeeId';
 exports.CATEGORY = 'category';
