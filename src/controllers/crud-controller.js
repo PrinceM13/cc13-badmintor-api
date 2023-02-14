@@ -65,7 +65,12 @@ exports.getAllRecords = (Model, recordName = '') => {
             let records;
             // for Employee: check if authenticated user try to create his/her self
             if (recordName === EMPLOYEE) {
-                records = await Model.findAll({ include: { model: User } });
+                records = await Model.findAll({
+                    include: {
+                        model: User,
+                        attributes: { exclude: ['password'] }
+                    }
+                });
             } else if (recordName === USER) {
                 records = await Model.findAll({
                     include: {
