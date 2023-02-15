@@ -16,6 +16,7 @@ router.get('/brands', crudController.getAllRecords(Supplier));                  
 router.get('/brands/:supplierId', productController.getAllProductsByForeignKeyId(SUPPLIER_ID));         // get all product where supplier_id = supplierId
 // product
 router.get('/products', productController.getAllProducts);                                              // get all
+router.post('/products', productController.getAllProductsInCart);                                              // get all
 router.get('/products/:productId', crudController.getRecordById(Product, PRODUCT_ID, PRODUCT));         // get by id
 // promotion
 router.get('/promotions', productController.getAllProductsWithPromotion);                               // get all products with promotion
