@@ -13,6 +13,7 @@ const authRoute = require('./routes/auth-route');
 const userRoute = require('./routes/user-route');
 const adminRoute = require('./routes/admin-route');
 const superUserRoute = require('./routes/super-user-route');
+const checkoutRoute = require('./routes/checkout-route');
 
 const authenticateMiddleware = require('./middlewares/authenticate');
 const authLevelMiddleware = require('./middlewares/auth-level')
@@ -35,6 +36,7 @@ app.use('/auth', authRoute);                                                    
 app.use('/user', authenticateMiddleware, userRoute);                                                // authentication's level = user
 app.use('/admin', authenticateMiddleware, authLevelMiddleware([ADMIN, SUPER_USER]), adminRoute);    // authentication's level = admin (or above)
 app.use('/super-user', authenticateMiddleware, authLevelMiddleware(SUPER_USER), superUserRoute);    // authentication's level = super user
+app.use('/checkout', authenticateMiddleware, checkoutRoute);
 
 // middleware error
 app.use(notFoundMiddleWare);
